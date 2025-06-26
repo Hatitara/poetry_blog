@@ -1,0 +1,30 @@
+<h2>{{ poem.title }}</h2>
+<p><em>від {{ poem.author }}</em> | 🕓 {{ poem.created_at.strftime('%Y-%m-%d') }}</p>
+<p>{{ poem.body }}</p>
+
+<form method="post" action="{{ url_for('home.like', poem_id=poem.id) }}">
+    <button type="submit">
+        {% if current_user.is_authenticated and poem in current_user.liked_poems %}
+            💖 Скасувати лайк
+        {% else %}
+            🤍 Лайк
+        {% endif %}
+    </button>
+</form>
+
+<form method="post" action="{{ url_for('home.bookmark', poem_id=poem.id) }}">
+    <button type="submit">🔖 Зберегти</button>
+</form>
+
+<h3>💬 Коментарі</h3>
+<form method="post" action="{{ url_for('home.comment', poem_id=poem.id) }}">
+    <textarea name="content" rows="3" placeholder="Напишіть коментар..."></textarea>
+    <button type="submit">Надіслати</button>
+</form>
+
+{% for c in poem.comments %}
+    <div class="comment">
+        <b>{{ c.user.username }}</b> ({{ c.created_at.strftime('%H:%M %d.%m') }}):<br>
+        {{ c.content }}
+    </div>
+{% endfor %}

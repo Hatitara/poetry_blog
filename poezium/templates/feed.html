@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🧡 Моя стрічка</h2>
+{% if poems %}
+    {% for poem in poems %}
+        <div class="poem">
+            <h3>{{ poem.title }}</h3>
+            <p><em>{{ poem.author }}</em></p>
+            <p>{{ poem.body[:250] }}...</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Поки немає публікацій. Спробуй підписатись на когось!</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🔍 Всі вірші</h2>
+<form method="get">
+    <label>Сортувати:
+        <select name="sort" onchange="this.form.submit()">
+            <option value="new" {% if sort == 'new' %}selected{% endif %}>Нові</option>
+            <option value="popular" {% if sort == 'popular' %}selected{% endif %}>Популярні</option>
+        </select>
+    </label>
+</form>
+
+{% for poem in poems %}
+    <div class="poem">
+        <h3>{{ poem.title }}</h3>
+        <p><em>{{ poem.author }}</em> | {{ poem.created_at.strftime('%Y-%m-%d') }}</p>
+        <p>{{ poem.body[:250] }}...</p>
+    </div>
+{% endfor %}
+{% endblock %}

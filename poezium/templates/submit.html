@@ -3,13 +3,39 @@
 <h2>Новий вірш</h2>
 <form method="POST">
     {{ form.hidden_tag() }}
-    <p>{{ form.title.label }}<br>{{ form.title(size=50) }}</p>
-    <p>{{ form.body.label }}<br>{{ form.body(rows=10, cols=60) }}</p>
+    <p>{{ form.title.label }}<br>{{ form.title(size=60) }}</p>
+    <p>{{ form.body.label }}<br>{{ form.body(rows=10, cols=80) }}</p>
+    <p>{{ form.tags.label }}<br>{{ form.tags(size=60) }}</p>
+    <p>{{ form.category.label }}<br>{{ form.category(size=60) }}</p>
+    <p>{{ form.is_draft() }} {{ form.is_draft.label }}</p>
+
     {% if current_user.is_authenticated %}
         <p><input type="checkbox" name="anonymous"> Опублікувати анонімно</p>
     {% else %}
-        <p><input type="checkbox" disabled> Увійдіть, щоб публікувати НЕ анонімно</p>
+        <p><input type="checkbox" disabled> Увійдіть, щоб публікувати анонімно</p>
     {% endif %}
+
     <p>{{ form.submit() }}</p>
 </form>
+
+<button onclick="togglePreview()">Попередній перегляд</button>
+
+<div id="preview" style="display:none; margin-top:20px;">
+    <h3>Попередній перегляд</h3>
+    <h4 id="preview-title"></h4>
+    <pre id="preview-body"></pre>
+</div>
+
+<script>
+function togglePreview() {
+    const title = document.querySelector('input[name="title"]').value;
+    const body = document.querySelector('textarea[name="body"]').value;
+
+    document.getElementById('preview-title').innerText = title;
+    document.getElementById('preview-body').innerText = body;
+
+    const preview = document.getElementById('preview');
+    preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+}
+</script>
 {% endblock %}
