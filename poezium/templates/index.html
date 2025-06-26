@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Останні вірші</h2>
+{% for poem in poems %}
+    <div class="poem">
+        <h3>{{ poem.title }}</h3>
+        <p><em>від {{ poem.author }}</em></p>
+        <p>{{ poem.body[:250] }}...</p>
+    </div>
+{% else %}
+    <p>Ще немає віршів</p>
+{% endfor %}
+{% endblock %}

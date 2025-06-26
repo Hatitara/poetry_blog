@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Новий вірш</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.title.label }}<br>{{ form.title(size=50) }}</p>
+    <p>{{ form.body.label }}<br>{{ form.body(rows=10, cols=60) }}</p>
+    {% if current_user.is_authenticated %}
+        <p><input type="checkbox" name="anonymous"> Опублікувати анонімно</p>
+    {% else %}
+        <p><input type="checkbox" disabled> Увійдіть, щоб публікувати НЕ анонімно</p>
+    {% endif %}
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

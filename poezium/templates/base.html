@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Поезіум: Поетичний блог</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('home.index') }}">Поезіум</a></h1>
+        <nav>
+            <a href="{{ url_for('home.submit') }}">📝 Додати</a>
+            {% if current_user.is_authenticated %}
+                <span>👤 {{ current_user.username }}</span>
+                <a href="{{ url_for('auth.logout') }}">Вийти</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Увійти</a> /
+                <a href="{{ url_for('auth.register') }}">Реєстрація</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for m in messages %}
+                        <li>{{ m }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
